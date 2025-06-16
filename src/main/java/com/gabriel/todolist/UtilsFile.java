@@ -6,14 +6,31 @@ import java.util.Scanner;
 public class UtilsFile {
 
     public static boolean CheckForFile() {
+
         File file = new File(Config.FILE_PATH);
         boolean fileExists = file.exists();
+
         if (fileExists) {
             return true;
         } else {
-            System.out.println("Would you like to create a task file? (Y/N).\n");
-            AskPath();
+            System.out.println("Would you like to create a task file? (Y/N).");
+            if (askUser("Y/N")) {
+                AskPath();
+                CreateFile(Config.FILE_PATH);
+            }
+            else
+                return false;
             return new File(Config.FILE_PATH).exists();  // chequear otra vez después de intentar crearlo
+        }
+    }
+
+    public static void AskPath() {
+        System.out.print("Would you like to create a task file in the Standard Path? (Y/N)\n" + Config.STD_PATH + "\n");
+        if (askUser("Y/N")) {
+            CreateFile(Config.STD_PATH);
+            Config.FILE_PATH = Config.STD_PATH;
+        } else {
+            askUser("path");
         }
     }
 
@@ -28,16 +45,6 @@ public class UtilsFile {
             }
         } catch (IOException e) {
             System.err.println("Error al crear el archivo: " + e.getMessage());
-        }
-    }
-
-    public static void AskPath() {
-        System.out.print("Would you like to create a task file in the Standard Path? (Y/N)\n" + Config.STD_PATH + "\n");
-        if (askUser("Y/N")) {
-            CreateFile(Config.STD_PATH);
-            Config.FILE_PATH = Config.STD_PATH;
-        } else {
-            askUser("path");
         }
     }
 
@@ -61,7 +68,7 @@ public class UtilsFile {
                 System.out.print("Insert the folder path: ");
                 do {
                     path = scanner.nextLine();
-                } while (checkPath(path));
+                } while (!checkPath(path));
                 Config.FILE_PATH = path + "/data.txt";
                 return true;
             }
