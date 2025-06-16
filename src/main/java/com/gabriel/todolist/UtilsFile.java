@@ -5,61 +5,84 @@ import java.util.Scanner;
 
 public class UtilsFile {
 
-    public static void CheckForFile(String[] args) {
+    public static boolean CheckForFile() {
         File file = new File(Config.FILE_PATH);
         boolean fileExists = file.exists();
         if (fileExists) {
-            System.out.println("El archivo existe.\n");
+            return true;
         } else {
             System.out.println("Would you like to create a task file? (Y/N).\n");
-            AskPath(args);
-            CreateFile(args);
+            AskPath();
+            return new File(Config.FILE_PATH).exists();  // chequear otra vez después de intentar crearlo
         }
     }
 
-    public static void CreateFile(String[] args) {
-        File fileCreate = new File(Config.FILE_PATH);
-        boolean Created = fileCreate.createNewFile();
+    public static void CreateFile(String path) {
+        File fileCreate = new File(path);
+        try {
+            boolean created = fileCreate.createNewFile();
+            if (created) {
+                System.out.println("Archivo creado correctamente.");
+            } else {
+                System.out.println("El archivo ya existe.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al crear el archivo: " + e.getMessage());
+        }
     }
 
-    public static void AskPath(String[] args) {
-        System.out.print("Would you like to create a task file in the in the Standar Path?. (Y/N)\n" + Config.STD_PATH + "\n");
-        if (N) {
- 
-        }
-        Scanner scanner = new Scanner(System.in);
-        String nombre = scanner.nextLine();
-    }
-
-    public static String AskUser(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        if () { 
-           do {
-				String input = scanner.nextLine();
-            } while (!input || ((input != 'y' || input != 'n') && !input[2]));
-
-        }
-        if (path) {
-            String path = scanner.nextLine();
-            // verificar que PATH esxista.
-            // si no existe preguntar si crear o no
-
-        }
-        return scanner;
-    }
-
-	public static boolean CheckPath(String[] args)
-	{
-		File file = new File(Config.FILE_PATH);
-        boolean fileExists = file.exists();
-        if (fileExists) {
-            return (true);
+    public static void AskPath() {
+        System.out.print("Would you like to create a task file in the Standard Path? (Y/N)\n" + Config.STD_PATH + "\n");
+        if (askUser("Y/N")) {
+            CreateFile(Config.STD_PATH);
+            Config.FILE_PATH = Config.STD_PATH;
         } else {
-            return (false);
-	}
-}
+            askUser("path");
+        }
+    }
 
-// comprobar si existe archivo.
-// crear archivo en caso de no existir
-// preguntar si deeas crearlo.
-					// leer de la conosola si el usuario presiona Y / N
+    public static boolean askUser(String mode) {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        switch (mode) {
+            case "Y/N" -> {
+                do {
+                    input = scanner.nextLine().toLowerCase();
+                } while (!input.equals("y") && !input.equals("n"));
+                if (input.equals("y")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            case "path" -> {
+                String path;
+                System.out.print("Insert the folder path: ");
+                do {
+                    path = scanner.nextLine();
+                } while (checkPath(path));
+                Config.FILE_PATH = path + "/data.txt";
+                return true;
+            }
+
+            default -> {
+                System.err.println("Error.\n");
+                return false;
+            }
+        }
+    }
+
+    public static boolean checkPath(String path) {
+        File dir = new File(path);
+
+        if (!dir.exists()) {
+            boolean created = dir.mkdirs();
+            if (!created) {
+                System.err.println("Path could not be created.\n");
+                return false;
+            }
+        }
+        return dir.exists() && dir.isDirectory(); // asegúrate de que realmente es un directorio
+    }
+}
