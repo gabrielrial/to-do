@@ -14,23 +14,23 @@ public class UtilsFile {
             return true;
         } else {
             System.out.println("Would you like to create a task file? (Y/N).");
-            if (askUser("Y/N")) {
+            if (AskUser("Y/N")) {
                 AskPath();
                 CreateFile(Config.FILE_PATH);
-            }
-            else
+            } else {
                 return false;
+            }
             return new File(Config.FILE_PATH).exists();  // chequear otra vez después de intentar crearlo
         }
     }
 
     public static void AskPath() {
         System.out.print("Would you like to create a task file in the Standard Path? (Y/N)\n" + Config.STD_PATH + "\n");
-        if (askUser("Y/N")) {
+        if (AskUser("Y/N")) {
             CreateFile(Config.STD_PATH);
             Config.FILE_PATH = Config.STD_PATH;
         } else {
-            askUser("path");
+            AskUser("path");
         }
     }
 
@@ -48,7 +48,7 @@ public class UtilsFile {
         }
     }
 
-    public static boolean askUser(String mode) {
+    public static boolean AskUser(String mode) {
         Scanner scanner = new Scanner(System.in);
         String input;
 
