@@ -1,6 +1,9 @@
+package com.gabriel.todolist;
+
 import java.util.Scanner;
 
 public class Task {
+
     private String title;
     private String description;
     private String date;

@@ -1,25 +1,22 @@
 JAVAC = javac
 JAVA = java
 
-# Ruta a los archivos fuente
 SRC_DIR = src/main/java
 PKG_DIR = com/gabriel/todolist
 LIB = lib/gson-2.10.1.jar
+OUT = out
 
-# Archivos fuente
 SRC = $(wildcard $(SRC_DIR)/$(PKG_DIR)/*.java)
+MAIN = com.gabriel.todolist.App
 
-# Clase principal con su nombre completo
-MAIN = App
-
-# Regla por defecto
 all: compile
 
 compile:
-	javac -cp $(LIB) $(SRC)
+	mkdir -p $(OUT)
+	$(JAVAC) -cp $(LIB) -d $(OUT) $(SRC)
 
 run:
-	$(JAVA) $(MAIN)
+	$(JAVA) -cp "$(LIB):$(OUT)" $(MAIN)
 
 clean:
-	find $(SRC_DIR) -name "*.class" -delete
+	rm -rf $(OUT)

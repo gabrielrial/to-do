@@ -1,3 +1,4 @@
+package com.gabriel.todolist;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class UtilsFile {
         if (fileExists) {
             return true;
         } else {
-            System.out.println("Would you like to create a task file? (Y/N).");
+            System.out.println("File does not exist. Would you like to create a task file? (Y/N).");
             if (AskUser("Y/N")) {
                 AskPath();
                 CreateFile(Config.FILE_PATH);
@@ -24,15 +25,15 @@ public class UtilsFile {
         }
     }
 
-    public static void AskPath() {
-        System.out.print("Would you like to create a task file in the Standard Path? (Y/N)\n" + Config.STD_PATH + "\n");
-        if (AskUser("Y/N")) {
-            CreateFile(Config.STD_PATH);
-            Config.FILE_PATH = Config.STD_PATH;
-        } else {
-            AskUser("path");
-        }
-    }
+	public static string AskPath() {
+		Scanner	scanner = new Scanner(System.in);
+		String	path;
+		
+		System.out.print("Insert the folder path: ");
+		do {
+			path = scanner.nextLine();
+		} while (!checkPath(path));
+	}
 
     public static void CreateFile(String path) {
         File fileCreate = new File(path);
@@ -69,7 +70,7 @@ public class UtilsFile {
                 do {
                     path = scanner.nextLine();
                 } while (!checkPath(path));
-                Config.FILE_PATH = path + "/data.txt";
+                Config.FILE_PATH = path + "/data.json";
                 return true;
             }
 
