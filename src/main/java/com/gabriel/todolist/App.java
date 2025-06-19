@@ -5,10 +5,7 @@ import com.gabriel.todolist.Taskmanagment;
 
 public class App {
     public static void main(String[] args) {
-        Config config = new Config();
-        if (!config.exists)
-            return;
-        
+        Config.initialize();
         UtilsFile.CheckForFile();
         Taskmanagment.newTask();
     }
