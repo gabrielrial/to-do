@@ -5,23 +5,23 @@ import java.io.IOException;
 
 public class UtilsFile {
 
-	public static boolean CheckForFile() {
-
-		File file = new File(Config.getConfig());
-		boolean fileExists = file.exists();
-
-		if (fileExists) {
-			return true;
-		} else {
-			System.out.println("File does not exist. Would you like to create a task file? (Y/N).");
-			if (AskUser()) {
-				CreateFile(AskPath());
-			} else {
-				return false;
-			}
-			return new File(Config.getConfig()).exists(); // chequear otra vez después de intentar crearlo
-		}
-	}
+	//public static boolean CheckForFile() {
+//
+	//	File file = new File(Config.getConfigFile());
+	//	boolean fileExists = file.exists();
+//
+	//	if (fileExists) {
+	//		return true;
+	//	} else {
+	//		System.out.println("File does not exist. Would you like to create a task file? (Y/N).");
+	//		if (AskUser()) {
+	//			CreateFile(AskPath());
+	//		} else {
+	//			return false;
+	//		}
+	//		return true; // chequear otra vez después de intentar crearlo
+	//	}
+	//}
 
 	public static String AskPath() {
 		String path;
@@ -35,13 +35,20 @@ public class UtilsFile {
 	}
 
 	public static boolean CreateFile(String path) {
-		File fileCreate = new File(path);
+		File file = new File(path);
+
 		try {
-			boolean created = fileCreate.createNewFile();
+			File parentDir = file.getParentFile();
+			if (parentDir != null && !parentDir.exists()) {
+				parentDir.mkdirs();
+			}
+			boolean created = file.createNewFile();
 			if (created) {
+				System.out.println("Archivo creado: " + path);
 				return true;
 			} else {
-				System.out.println("El archivo ya existe.");
+				System.out.println("El archivo ya existe: " + path);
+				return true;
 			}
 		} catch (IOException e) {
 			System.err.println("Error al crear el archivo: " + e.getMessage());
@@ -72,9 +79,8 @@ public class UtilsFile {
 		return dir.exists() && dir.isDirectory(); // asegúrate de que realmente es un directorio
 	}
 
-	public static boolean InitConfigFile(String path)
-	{
-		
+	public static boolean InitConfigFile(String path) {
+
 		return true;
 	}
 }

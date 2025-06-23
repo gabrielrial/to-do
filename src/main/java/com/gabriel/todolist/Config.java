@@ -1,46 +1,29 @@
 package com.gabriel.todolist;
 
-import java.io.File;
-
 public class Config {
 
-    public static int color = 0xFFFFFF;
-    public static String TASK_FILE;
+	public String user;
+	public String taskFile;
+	public int color;
 
-    private static String CONFIG_FILE;
-    
-    private static final String DEFAULT_TASK_PATH_FILE = "../../../../../../data/task.json";
+	public Config() {
+		this.user = null;
+		this.taskFile = null;
+		this.color = 0;
+	}
 
-    static {
-        setConfigs();
-    }
+	public boolean SetColor(int color) {
+		this.color = color;
+		return true;
+	}
 
-    public static String getTaskFile() {
-        return TASK_FILE;
-    }
+	public boolean setTaskFile(String path) {
+		this.taskFile = path;
+		return true;
+	}
 
-    public static String getDefaultTaskPath() {
-        return DEFAULT_TASK_PATH_FILE;
-    }
-
-    public static void setTaskFile(String path) {
-        TASK_FILE = path;
-    }
-
-    public static void setConfigFile(String path) {
-        CONFIG_FILE = path;
-    }
-
-    public static int setConfigs() {
-        File file = new File(CONFIG_FILE);
-        if (!file.exists()) {
-            System.err.println("Config file does not exist. Creating config file...");
-            UtilsFile.CreateFile(CONFIG_FILE);
-			setTaskFile(DEFAULT_PATH);
-			if (!UtilsFile.AskUser("Y/N"))
-				setTaskFile(UtilsFile.AskPath() + "task.json");
-        }
-        return 1;
-    }
+	public static boolean ConfigToJson(Config config, String path) {
+		System.out.println("Saving config to " + path);
+		return true;
+	}
 }
-
