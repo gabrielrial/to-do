@@ -7,7 +7,7 @@ public class Config {
 	public int color;
 
 	public Config() {
-		this.user = null;
+		this.user = "Alpha";
 		this.taskFile = null;
 		this.color = 0;
 	}
@@ -17,6 +17,9 @@ public class Config {
 		return true;
 	}
 
+	public String getTaskFile() {
+		return this.taskFile;
+	}
 	public boolean setTaskFile(String path) {
 		this.taskFile = path;
 		return true;

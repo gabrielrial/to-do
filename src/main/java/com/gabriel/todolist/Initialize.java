@@ -6,7 +6,7 @@ public class Initialize {
 
 	public static final String CONF_PATH = "data/config.json";
 	public static final String TASK_PATH_DEFAULT = "data/task.json";
-	
+
 	public static String USER_TASK;
 
 	public static boolean InitProgam(Config data) {
@@ -19,29 +19,43 @@ public class Initialize {
 			System.out.println("Check: Initialitze.InitPogram.TaskFile: Error");
 			return false;
 		}
-		Json.saveTaskToJson(data, CONF_PATH);
+		Json.saveToJson(data, CONF_PATH);
 		return true;
 	}
 
 	private static boolean ConfigFile(Config data) {
-		File ConfigFile = new File(CONF_PATH);
+		File configFile = new File(CONF_PATH);
 
-		if (!ConfigFile.exists()) {
+		if (!configFile.exists()) {
 			System.out.println("Check: Initialitze.ConfigFile: creating file");
 			if (!UtilsFile.CreateFile(CONF_PATH)) {
 				System.out.println("Check: Initialitze.ConfigFile: error creating file");
 				return false;
 			}
+			return true;
 		}
+
 		System.out.println("Si el archivo existe, tomar ruta de task file");
+
+		// ✅ Leer config.json y obtener el path de task
+		Config savedConfig = Json.readFromJson(CONF_PATH, Config.class);
+		if (savedConfig != null && savedConfig.getTaskFile() != null) {
+			USER_TASK = savedConfig.getTaskFile();
+			data.setTaskFile(USER_TASK);
+			System.out.println("Ruta obtenida desde config.json: " + USER_TASK);
+		} else {
+			System.out.println("No se encontró una ruta válida en config.json");
+		}
 		return true;
 	}
 
 	private static boolean TaskFile(Config data) {
 		File TaskFile = new File(TASK_PATH_DEFAULT);
-		
-		if (TaskFile.exists())
+
+		if (TaskFile.exists()) {
+			System.out.println("chau");
 			return true;
+		}
 		System.out.println("Do you have a task file already?");
 
 		if (!UtilsFile.AskUser()) {

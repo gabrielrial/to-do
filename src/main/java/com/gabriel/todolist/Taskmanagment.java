@@ -12,6 +12,6 @@ public class Taskmanagment {
 		System.out.println("Description: " + newTask.getDescription());
 		System.out.println("Date: " + newTask.getDate());
 		System.out.println("Option to edit any of the fields");
-		Json.saveTaskToJson(newTask, data.taskFile);
+		Json.saveToJsonList(newTask, data.taskFile, Task.class);
 	}
 }

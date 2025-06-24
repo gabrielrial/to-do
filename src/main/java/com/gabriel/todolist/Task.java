@@ -1,18 +1,27 @@
 package com.gabriel.todolist;
 
+import java.time.LocalDate;
+
 public class Task {
 
 	private String title;
 	private String description;
 	private String date;
+//	private String dead_line;
 	private boolean done;
 
 	public Task() {
 		setTitle();
 		setDescription();
 		setDate();
+//		setDeadLine();
 		this.done = false;
 	}
+
+//	public void setDeadLine() {
+//		System.out.print("Enter dead line: ");
+//		this.dead_line = Input.scanner.nextLine();
+//	}
 
 	public void setTitle() {
 		System.out.print("Enter task title: ");
@@ -25,8 +34,7 @@ public class Task {
 	}
 
 	public void setDate() {
-		System.out.print("Enter date (DD/MM/YYYY): ");
-		this.date = Input.scanner.nextLine();
+		date = LocalDate.now().toString();
 	}
 
 	public String getTitle() {
