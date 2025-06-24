@@ -5,6 +5,7 @@ public class App {
 	public static void main(String[] args) {
 
 		Config data = new Config();
+		String input;
 
 		Initialize.InitProgam(data);
 		// UtilsFile.CheckForFile();
@@ -12,6 +13,11 @@ public class App {
 		 * funcion llamada program donde basicamente permite agregar, mostrar,
 		 * eliminar tareas y cerrar el programa.
 		 */
-		Taskmanagment.newTask(data);
+
+		while (true) {
+			input = Input.scanner.nextLine().trim().toLowerCase();
+			
+			Taskmanagment.newTask(data);
+		}
 	}
 }
