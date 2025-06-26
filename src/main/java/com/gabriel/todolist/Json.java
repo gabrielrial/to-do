@@ -61,4 +61,23 @@ public class Json {
 			System.err.println("Error saving: " + e.getMessage());
 		}
 	}
+
+	public static List<Task> getTasksFromJson(String filePath) {
+		Gson gson = new Gson();
+		List<Task> tasks = null;
+
+		try (FileReader reader = new FileReader(filePath)) {
+			Type taskListType = new TypeToken<List<Task>>() {
+			}.getType();
+			tasks = gson.fromJson(reader, taskListType);
+		} catch (IOException e) {
+			System.err.println("Error reading task file: " + e.getMessage());
+		}
+
+		if (tasks == null) {
+			tasks = List.of(); // return empty list if file is empty or invalid
+		}
+
+		return tasks;
+	}
 }

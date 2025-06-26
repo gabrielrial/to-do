@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug App",
+      "request": "launch",
+      "mainClass": "com.gabriel.todolist.App",
+      "projectName": "To-Do",
+      "classPaths": [
+        "lib/*",
+        "src/main/java"
+      ]
+    }
+  ]
+}

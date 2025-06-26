@@ -7,15 +7,15 @@ public class Task {
 	private String title;
 	private String description;
 	private String date;
-//	private String dead_line;
+	private String dead_line;
 	private boolean done;
 
 	public Task() {
-		setTitle();
-		setDescription();
-		setDate();
-//		setDeadLine();
-		this.done = false;
+		this.title = null;
+		this.description = null;
+		this.date = null;
+		this.dead_line = null;
+		this. done = false;
 	}
 
 //	public void setDeadLine() {
